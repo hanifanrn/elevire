@@ -33,6 +33,9 @@ a {
   text-decoration: none;
   transition: all 0.8s;
 }
+input:focus {
+  outline: none;
+}
 main {
   background: var(--c-blue);
   overflow: hidden;
@@ -90,7 +93,78 @@ header {
   height:100%;
   width: 100%;
 }
-.chat-area {
+.chat-history {
   flex: 1;
   overflow-y: auto;
+}
+.chat-input {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--c-white);
+  height: 55px;
+}
+.chat-input-field {
+  flex: 1;
+  color: var(--c-white);
+  background-color: var(--c-blue);
+  border: none;
+  padding: 5px;
+}
+.chat-send-button {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+
+  border-top: 1px solid var(--c-white);
+  border-left: 1px solid var(--c-white);
+  background-color: var(--c-blue);
+  padding: 0.5px;
+  color: var(--c-white);
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  width: 55px;
+}
+.message-row {
+  width: 100%;
+  display: flex;
+  margin: 0.5rem 0;
+}
+
+.message-row.user {
+  justify-content: flex-end; /* Right-align user messages */
+}
+
+.message-row.bot {
+  justify-content: flex-start; /* Left-align bot messages */
+}
+.chat-bubble {
+  display: inline-block;          /* Shrinks to fit content */
+  /* display: flex;
+  flex-direction: column; */
+  max-width: 80%;                 /* Optional: limit long messages */
+  list-style-type: none;
+  padding: 0.75rem;
+  margin: 0.5rem;
+  background-color: var(--c-blue);
+  border: 1px solid var(--c-white);
+  color: var(--c-white);
+  font-weight: 400;
+  word-break: break-word;         /* Prevent overflow on long words */
+}
+
+.chat-bubble.user {
+  margin-left: auto;
+  text-align: right;
+}
+
+.chat-bubble.bot {
+  margin-right: auto;
+  text-align: left;
+}
+.chat-bubble.bot strong {
+  font-weight: bold;
+}
+.chat-bubble.bot em {
+  font-style: italic;
 }

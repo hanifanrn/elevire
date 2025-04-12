@@ -1,11 +1,13 @@
 use leptos::{
     ev::KeyboardEvent,
+    html::InnerHtmlAttribute,
     prelude::{
         component, event_target_value, view, AriaAttributes, ClassAttribute, ElementChild, Get,
         IntoView, OnAttribute, ReadSignal, RwSignal, Set, Update,
     },
     task::spawn_local,
 };
+use pulldown_cmark::{html, Options, Parser};
 use reqwasm::http::Request;
 
 use crate::components::chat::model::{ChatRequest, ChatResponse};
@@ -29,6 +31,7 @@ pub async fn send_chat(prompt: String) -> Option<String> {
 
     None
 }
+
 #[component]
 pub fn ChatArea() -> impl IntoView {
     let chat_history = RwSignal::new(vec![]);
@@ -50,9 +53,19 @@ fn ChatHistory(history: ReadSignal<Vec<(String, String)>>) -> impl IntoView {
     view! {
         <ul>
             {move || history.get().iter().map(|(user, bot)| view! {
-                <li>
-                    <p><strong>You:</strong> {user.clone()} </p>
-                    <p><strong>Gemini:</strong> {bot.clone()} </p>
+                <li class="message-row user">
+                    <div class="chat-bubble user">{user.clone()}</div>
+                </li>
+                <li class="message-row bot">
+                    <div class="chat-bubble bot">
+                        {
+                            let bot_clone = bot.clone(); // Clone the bot string to extend its lifetime
+                            let parser = Parser::new_ext(&bot_clone, Options::all()); // Use the cloned string
+                            let mut html_output = String::new();
+                            html::push_html(&mut html_output, parser);
+                            view! { <div inner_html=html_output /> }
+                        }
+                    </div>
                 </li>
             }).collect::<Vec<_>>()}
         </ul>

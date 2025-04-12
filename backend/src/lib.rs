@@ -11,7 +11,6 @@ pub fn app() -> Router {
     let cors_layer = CorsLayer::new()
         .allow_origin([
             HeaderValue::from_static("http://localhost:8080"), // for development only
-            HeaderValue::from_static("http://localhost:8082"), // for development only
         ])
         .allow_methods([Method::GET, Method::POST])
         .allow_headers([header::CONTENT_TYPE]);
