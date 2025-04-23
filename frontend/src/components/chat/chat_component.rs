@@ -3,7 +3,7 @@ use leptos::{
     html::InnerHtmlAttribute,
     prelude::{
         component, event_target_value, view, AriaAttributes, ClassAttribute, ElementChild, Get,
-        IntoView, OnAttribute, ReadSignal, RwSignal, Set, Update,
+        IntoView, OnAttribute, PropAttribute, ReadSignal, RwSignal, Set, Update,
     },
     task::spawn_local,
 };
@@ -98,7 +98,8 @@ fn ChatInput(history: RwSignal<Vec<(String, String)>>) -> impl IntoView {
 
     let handle_enter = {
         move |ev: KeyboardEvent| {
-            if ev.key() == "Enter" {
+            if ev.key() == "Enter" && !ev.shift_key() {
+                ev.prevent_default();
                 send();
             }
         }
@@ -106,12 +107,11 @@ fn ChatInput(history: RwSignal<Vec<(String, String)>>) -> impl IntoView {
 
     view! {
         <div class="chat-input">
-            <input
+            <textarea
                 class="chat-input-field"
-                type="text"
                 placeholder="Type your message..."
                 aria-label="Message input"
-                value=move || message.get()
+                prop:value=move || message.get()
                 on:input=move |e| message.set(event_target_value(&e))
                 on:keydown=handle_enter
             />

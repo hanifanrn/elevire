@@ -33,6 +33,9 @@ a {
   text-decoration: none;
   transition: all 0.8s;
 }
+textarea:focus {
+  outline: none;
+}
 input:focus {
   outline: none;
 }
@@ -46,13 +49,13 @@ main {
   font-size: 13px;
 }
 .site-frame {
+  display: flex;
   position: absolute;
   left: var(--pad-side);
   right: var(--pad-side);
   top: 1px;
   bottom: var(--pad-vertical);
   border: 1px solid var(--c-white);
-  overflow: auto;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
@@ -132,20 +135,18 @@ header {
 }
 
 .message-row.user {
-  justify-content: flex-end; /* Right-align user messages */
+  justify-content: flex-end;      /* Right-align user messages */
 }
 
 .message-row.bot {
-  justify-content: flex-start; /* Left-align bot messages */
+  justify-content: flex-start;    /* Left-align bot messages */
 }
 .chat-bubble {
   display: inline-block;          /* Shrinks to fit content */
-  /* display: flex;
-  flex-direction: column; */
   max-width: 80%;                 /* Optional: limit long messages */
   list-style-type: none;
-  padding: 0.75rem;
-  margin: 0.5rem;
+  padding: 13px 21px;
+  margin: 13px;
   background-color: var(--c-blue);
   border: 1px solid var(--c-white);
   color: var(--c-white);
@@ -157,7 +158,6 @@ header {
   margin-left: auto;
   text-align: right;
 }
-
 .chat-bubble.bot {
   margin-right: auto;
   text-align: left;
@@ -167,4 +167,7 @@ header {
 }
 .chat-bubble.bot em {
   font-style: italic;
+}
+.chat-bubble li ul {
+  margin-left: 13px;
 }
